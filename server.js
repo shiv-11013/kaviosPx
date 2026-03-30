@@ -4,7 +4,7 @@ const connectToDB = require("./src/config/db");
 
 connectToDB();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.get("/", (req, res) => {
   res.send("Backend is running...");
