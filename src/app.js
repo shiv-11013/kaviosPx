@@ -9,7 +9,9 @@ const imageRouter = require("./routes/image.routes");
 require("./config/passport");
 
 const app = express();
-
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
