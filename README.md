@@ -28,7 +28,9 @@ https://kaviospx.onrender.com
 ---
 
 ## 📁 Project Structure (basic idea)
+## 📁 Project Structure (basic idea)
 
+```
 kaviosPix/
 ├── src/
 │   ├── config/
@@ -51,10 +53,10 @@ kaviosPix/
 │       ├── album.routes.js
 │       ├── auth.routes.js
 │       └── image.routes.js
-├── .env
 ├── app.js
 ├── server.js
 └── package.json
+```
 
 ---
 
