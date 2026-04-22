@@ -28,7 +28,6 @@ https://kaviospx.onrender.com
 ---
 
 ## 📁 Project Structure (basic idea)
-## 📁 Project Structure (basic idea)
 
 ```
 kaviosPix/
