@@ -10,8 +10,6 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
-      // YAHAN TERA KAAM HAI:
-      // 1. profile.emails[0].value se email nikalo
 
       const email = profile.emails[0].value;
 
