@@ -13,9 +13,9 @@ passport.use(
 
       const email = profile.emails[0].value;
 
-      // 2. DB mein check karo user exist karta hai?
+      
       let user = await userModel.findOne({ email });
-      // 3. Nahi karta toh create karo
+  
 
       if (!user) {
         user = await userModel.create({
@@ -24,7 +24,7 @@ passport.use(
           googleId: profile.id,
         });
       }
-      // 4. done(null, user) call karo
+
       return done(null, user);
     },
   ),
