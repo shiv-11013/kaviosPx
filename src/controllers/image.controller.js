@@ -53,7 +53,7 @@ async function deleteImageController(req, res) {
   try {
     const image = req.image;
 
-    await imagekit.deleteFile(image.imageId);
+    await imagekit.deleteFile(image.imagekitFileId);
 
     await image.deleteOne();
 

@@ -5,36 +5,41 @@ const imageSchema = new mongoose.Schema(
   {
     imageId: {
       type: String,
-      default: uuidv4,
+      default: uuidv4, 
     },
+
+    imagekitFileId: {
+      type: String,
+      required: true, 
+    },
+
     albumId: {
       type: String,
-      required: true, // kis album se linked hai
+      required: true,
     },
+
     name: {
       type: String,
       required: true,
     },
-    tags: [
-      {
-        type: String,
-      },
-    ],
-    person: {
-      type: String, // optional
+
+    url: {
+      type: String,
+      required: true,
     },
+
+    tags: [String],
+    person: String,
+
     isFavorite: {
       type: Boolean,
       default: false,
     },
-    comments: [
-      {
-        type: String,
-      },
-    ],
-    size: {
-      type: Number, // bytes / kb / mb (tu decide kar)
-    },
+
+    comments: [String],
+
+    size: Number,
+
     uploadedAt: {
       type: Date,
       default: Date.now,

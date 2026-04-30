@@ -175,6 +175,7 @@ async function uploadImageController(req, res) {
 
     const image = await imageModel.create({
       imageId: response.fileId,
+      imagekitFileId: response.fileId,
       albumId: albumId,
       name: file.originalname,
       size: file.size,
