@@ -53,7 +53,7 @@ async function updateAlbumController(req, res) {
     const ownerId = req.user.userId;
     const { description } = req.body;
 
-    const album = await albumModel.findOne({ albumId: req.params.albumId });
+    const album = await albumModel.findOne({albumId: req.params.albumId})
 
     if (!album) {
       return res.status(404).json({ message: "Album not found" });
@@ -86,7 +86,7 @@ async function shareEmailController(req, res) {
       });
     }
 
-    const album = await albumModel.findOne({ albumId: req.params.albumId });
+    const album = await albumModel.findOne({albumId: req.params.albumId});
 
     if (!album) {
       return res.status(404).json({ message: "Album not found" });
@@ -123,7 +123,7 @@ async function shareEmailController(req, res) {
 
 async function deleteAlbumController(req, res) {
   try {
-    const album = await albumModel.findOne({ albumId: req.params.albumId });
+    const album = await albumModel.findOne({albumId:req.params.albumId});
 
     if (!album) {
       return res.status(404).json({ message: "Album not found" });
