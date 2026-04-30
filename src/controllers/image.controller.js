@@ -1,5 +1,6 @@
 const imageModel = require("../models/image.model");
 const imagekit = require("../config/imagekit");
+const albumModel = require("../models/album.model");
 
 async function toggleFavoriteController(req, res) {
   try {
