@@ -94,10 +94,19 @@ async function getImagesController(req, res) {
     const { albumId } = req.params;
     const { tags } = req.query;
 
-    let filter = { albumId };
+    const album = await albumModel.findOne({ albumId });
 
+    if (!album) {
+      return res.status(404).json({ message: "Album not found" });
+    }
+
+    if (album.ownerId !== req.user.userId) {
+      return res.status(403).json({ message: "Not allowed" });
+    }
+
+    let filter = { albumId };
     if (tags) {
-      filter.tags = tags;
+      filter.tags = { $in: [tags] };
     }
 
     const images = await imageModel.find(filter);
