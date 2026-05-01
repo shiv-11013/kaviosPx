@@ -11,11 +11,7 @@ exports.googleLogin = (req, res) => {
     { expiresIn: "1d" },
   );
 
-  const frontendUrl =
-    process.env.NODE_ENV === "production"
-      ? process.env.FRONTEND_URL
-      : "http://localhost:3000";
-
+  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
   res.redirect(`${frontendUrl}?token=${token}`);
 };
 
