@@ -29,9 +29,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
 
-
 app.use("/api/auth", authRouter);
 app.use("/api/albums", albumRouter);
-app.use("/api/albums", imageRouter);
+
+app.use("/api/images", imageRouter); 
 
 module.exports = app;
