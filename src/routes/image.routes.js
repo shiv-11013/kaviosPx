@@ -1,40 +1,45 @@
 const express = require("express");
-const { verifyImageAccess }  = require("../middleware/image.Auth.middleware");
+const multer = require("multer");
+const { verifyImageAccess } = require("../middleware/image.Auth.middleware");
 const imageController = require("../controllers/image.controller");
 const { authMiddleware } = require("../middleware/auth.middleware");
+
 const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
-router.put(
-  "/:albumId/images/:imageId/favorite",
-  authMiddleware,
-  verifyImageAccess,
-  imageController.toggleFavoriteController,
-);
-
+// Upload Route (With Multer Middleware)
 router.post(
-  "/:albumId/images/:imageId/comments",
-  authMiddleware,
-  verifyImageAccess,
-  imageController.addCommentController,
+  "/:albumId", 
+  authMiddleware, 
+  upload.single("image"), 
+  imageController.uploadImageController
 );
 
+// Get Images
+router.get("/:albumId", authMiddleware, imageController.getImagesController);
+
+// Toggle Favorite
+router.put(
+  "/:albumId/:imageId/favorite",
+  authMiddleware,
+  verifyImageAccess,
+  imageController.toggleFavoriteController
+);
+
+// Add Comment
+router.post(
+  "/:albumId/:imageId/comments",
+  authMiddleware,
+  verifyImageAccess,
+  imageController.addCommentController
+);
+
+// Delete Image
 router.delete(
-  "/:albumId/images/:imageId",
+  "/:albumId/:imageId",
   authMiddleware,
   verifyImageAccess,
-  imageController.deleteImageController,
-);
-
-router.get(
-  "/:albumId/images",
-  authMiddleware,
-  imageController.getImagesController,
-);
-
-router.get(
-  "/:albumId/images/favorites",
-  authMiddleware,
-  imageController.getFavoriteImagesController,
+  imageController.deleteImageController
 );
 
 module.exports = router;
