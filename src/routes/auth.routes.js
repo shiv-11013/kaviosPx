@@ -15,4 +15,9 @@ router.get(
   authController.googleLogin,
 );
 
+//Add: Email Register
+router.post("/register", authController.registerController);
+
+//Add: Email Login
+router.post("/login", authController.loginController);
 module.exports = router;
