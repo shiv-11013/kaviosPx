@@ -20,4 +20,12 @@ router.post("/register", authController.registerController);
 
 //Add: Email Login
 router.post("/login", authController.loginController);
+
+// OTP SEND
+
+router.post("/send-otp", authController.sendOtpController);
+
+// verify OTP
+router.post("/verify-otp", authController.verifyOtpController);
+
 module.exports = router;
