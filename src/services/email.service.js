@@ -1,15 +1,5 @@
 const nodemailer = require("nodemailer");
 
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//     type: "OAuth2",
-//     user: process.env.EMAIL_USER,
-//     clientId: process.env.GOOGLE_CLIENT_ID,
-//     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//     refreshToken: process.env.REFRESH_TOKEN,
-//   },
-// });
 
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
@@ -19,6 +9,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER, 
     pass: process.env.SMTP_KEY,  
   },
+  connectionTimeout: 15000,
+  greetingTimeout: 10000, 
+  socketTimeout: 20000
 });
 
 const sendEmail = async (to, otp) => {

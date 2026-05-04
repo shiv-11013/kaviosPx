@@ -119,6 +119,8 @@ exports.loginController = async (req, res) => {
 // otp Email create
 
 exports.sendOtpController = async (req, res) => {
+  console.log("DEBUG: Request received at sendOtpController"); 
+  console.log("DEBUG: Request body is:", req.body);
   try {
     const { userEmail } = req.body;
 
