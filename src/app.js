@@ -8,7 +8,7 @@ const imageRouter = require("./routes/image.routes");
 const cors = require("cors");
 
 require("./config/passport");
-
+// Good Luck
 const app = express();
 
 app.use(
@@ -20,7 +20,6 @@ app.use(
     credentials: true,
   }),
 );
-
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
