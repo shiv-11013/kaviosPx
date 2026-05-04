@@ -15,10 +15,10 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://kavios-px-frontend-wy1x.vercel.app"
+      "https://kavios-px-frontend-kcsg.vercel.app/",
     ],
     credentials: true,
-  })
+  }),
 );
 
 app.get("/", (req, res) => {
@@ -32,6 +32,6 @@ app.use(passport.initialize());
 app.use("/api/auth", authRouter);
 app.use("/api/albums", albumRouter);
 
-app.use("/api/images", imageRouter); 
+app.use("/api/images", imageRouter);
 
 module.exports = app;
