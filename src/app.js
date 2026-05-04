@@ -13,10 +13,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://kavios-px-frontend-kcsg.vercel.app/",
-    ],
+    origin: process.env.ALLOWED_ORIGINS
+      ? process.env.ALLOWED_ORIGINS.split(",")
+      : ["http://localhost:3000"],
     credentials: true,
   }),
 );
