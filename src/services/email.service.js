@@ -1,33 +1,34 @@
-const nodemailer = require("nodemailer");
+const axios = require("axios");
 
-
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587, 
-  secure: false, 
-  auth: {
-    user: process.env.EMAIL_USER, 
-    pass: process.env.SMTP_KEY,  
-  },
-  connectionTimeout: 15000,
-  greetingTimeout: 10000, 
-  socketTimeout: 20000
-});
-
-const sendEmail = async (to, otp) => {
+const sendEmail = async (email, otp) => {
   try {
-    console.log("Attempting to send email to:", to); 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to,
-      subject: "OTP Verification",
-      text: `Your OTP is ${otp}`,
-    });
-    console.log("Email sent successfully!");
-    return { success: true };
-  } catch (err) {
-    console.error("Mail error details:", err); 
-    return { success: false, error: err.message };
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "KaviosPx",
+          email: process.env.EMAIL_USER,
+        },
+        to: [{ email: email }],
+        subject: "Your OTP Verification",
+        htmlContent: `<p>Your OTP code is <strong>${otp}</strong>. It is valid for 5 minutes.</p>`,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY, // Yeh aapka .env wala key hai
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    console.log("Email sent successfully via Brevo");
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error sending email:",
+      error.response?.data || error.message,
+    );
+    throw new Error("Email sending failed");
   }
 };
 
