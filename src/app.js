@@ -11,14 +11,19 @@ require("./config/passport");
 // Good Luck
 const app = express();
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim())
+  : ["http://localhost:3000"];
+
+console.log("CORS Allowed Origins:", allowedOrigins); // Debugging ke liye logs mein check karna
+
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGINS
-      ? process.env.ALLOWED_ORIGINS.split(",")
-      : ["http://localhost:3000"],
+    origin: allowedOrigins,
     credentials: true,
-  }),
+  })
 );
+
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
