@@ -1,9 +1,12 @@
 # 📷 KaviosPix
 
-KaviosPix is an image management backend API inspired by Google Photos.  
-Users can log in with Google or Email/Password, create albums, upload images and manage them.
+# 📷 KaviosPix
 
-Main focus of this project was to implement real backend concepts like auth, permissions, file upload and OTP verification.
+KaviosPix is a backend-focused image management system built with Node.js, Express and MongoDB.
+
+It supports Google OAuth, JWT authentication, OTP verification, album permissions, image uploads and image sharing features.
+
+The main goal of this project was to practice real backend engineering concepts such as authentication flows, authorization, file handling, middleware design and production deployment.
 
 ---
 
@@ -23,7 +26,7 @@ https://kaviospx.onrender.com
 - Multer (file upload)
 - ImageKit (image storage)
 - Bcrypt (password hashing)
-- Brevo (OTP email service)
+- Brevo API (OTP email delivery)
 
 ---
 
@@ -65,6 +68,7 @@ kaviosPix/
 ## 🔐 Auth Flow (how it works)
 
 ### Google OAuth
+
 - User hits `/api/auth/google`
 - Redirect to Google login
 - After login, callback comes
@@ -73,12 +77,14 @@ kaviosPix/
 - Token is used in protected routes
 
 ### Email/Password
+
 - User registers at `/api/auth/register`
 - Password is hashed using bcrypt
 - JWT token is returned
 - User logs in at `/api/auth/login`
 
 ### OTP Verification
+
 - User sends email to `/api/auth/send-otp`
 - OTP is sent via Brevo (valid for 5 minutes)
 - User verifies at `/api/auth/verify-otp`
@@ -102,21 +108,25 @@ kaviosPix/
 ## 🧠 Important Logic
 
 ### Album Permission
+
 - Only owner can update or delete album
 - Shared users can only view
 - This is checked in middleware
 
 ### Image Upload
+
 - Multer checks file type and size
 - Image is uploaded to ImageKit
 - Metadata is stored in DB
 
 ### Auth
+
 - JWT based system
 - Every protected route checks token
 - Both Google OAuth and Email/Password supported
 
 ### OTP Flow
+
 - OTP is hashed with bcrypt before saving to DB
 - OTP expires after 5 minutes
 - OTP is deleted from DB after successful verification
@@ -126,42 +136,48 @@ kaviosPix/
 ## 📡 API Endpoints
 
 ### Auth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/auth/google` | Google OAuth login |
-| GET | `/api/auth/google/callback` | Google callback |
-| POST | `/api/auth/register` | Email/password register |
-| POST | `/api/auth/login` | Email/password login |
-| POST | `/api/auth/send-otp` | Send OTP email |
-| POST | `/api/auth/verify-otp` | Verify OTP |
+
+| Method | Endpoint                    | Description             |
+| ------ | --------------------------- | ----------------------- |
+| GET    | `/api/auth/google`          | Google OAuth login      |
+| GET    | `/api/auth/google/callback` | Google callback         |
+| POST   | `/api/auth/register`        | Email/password register |
+| POST   | `/api/auth/login`           | Email/password login    |
+| POST   | `/api/auth/send-otp`        | Send OTP email          |
+| POST   | `/api/auth/verify-otp`      | Verify OTP              |
 
 ### Albums
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/albums` | Create album |
-| GET | `/api/albums` | Get all albums |
-| PUT | `/api/albums/:albumId` | Update description |
-| POST | `/api/albums/:albumId/share` | Share album |
-| DELETE | `/api/albums/:albumId` | Delete album |
+
+| Method | Endpoint                     | Description        |
+| ------ | ---------------------------- | ------------------ |
+| POST   | `/api/albums`                | Create album       |
+| GET    | `/api/albums`                | Get all albums     |
+| PUT    | `/api/albums/:albumId`       | Update description |
+| POST   | `/api/albums/:albumId/share` | Share album        |
+| DELETE | `/api/albums/:albumId`       | Delete album       |
 
 ### Images
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/albums/:albumId/images` | Upload image |
-| GET | `/api/albums/:albumId/images` | Get all images |
-| GET | `/api/albums/:albumId/images/favorites` | Get favorites |
-| PUT | `/api/albums/:albumId/images/:imageId/favorite` | Toggle favorite |
-| POST | `/api/albums/:albumId/images/:imageId/comments` | Add comment |
-| DELETE | `/api/albums/:albumId/images/:imageId` | Delete image |
+
+| Method | Endpoint                                        | Description     |
+| ------ | ----------------------------------------------- | --------------- |
+| POST   | `/api/albums/:albumId/images`                   | Upload image    |
+| GET    | `/api/albums/:albumId/images`                   | Get all images  |
+| GET    | `/api/albums/:albumId/images/favorites`         | Get favorites   |
+| PUT    | `/api/albums/:albumId/images/:imageId/favorite` | Toggle favorite |
+| POST   | `/api/albums/:albumId/images/:imageId/comments` | Add comment     |
+| DELETE | `/api/albums/:albumId/images/:imageId`          | Delete image    |
 
 ---
 
 ## ⚠️ Problems I faced
 
-- Google OAuth callback debugging
-- Handling album sharing permissions correctly
-- File upload error handling (invalid file, size limit)
-- Implementing OTP expiry and hashing properly
+- Fixing CORS issues between Vercel frontend and Render backend during production deployment
+- Handling Google OAuth callback flow and frontend token redirection properly
+- Designing album permission logic so shared users could only view but not modify albums
+- Managing OTP verification flow with expiry handling and bcrypt hashing
+- Preventing duplicate OTP entries and cleaning expired OTP records
+- Handling multipart image uploads and validating file size/type safely
+- Debugging async issues and deployment mismatches between local and production environments
 
 ---
 
@@ -177,7 +193,7 @@ kaviosPix/
 ## ▶️ Run locally
 
 ```bash
-git clone https://github.com/shiv-11013/kaviosPx.git
+git clone https://github.com/shiv-11013/kaviosPx
 cd kaviosPix
 npm install
 npm run dev
@@ -191,11 +207,11 @@ MONGO_URI=
 JWT_SECRET=
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
-GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
+GOOGLE_CALLBACK_URL=
 IMAGEKIT_PUBLIC_KEY=
 IMAGEKIT_PRIVATE_KEY=
 IMAGEKIT_URL_ENDPOINT=
-FRONTEND_URL=http://localhost:3000
+FRONTEND_URL=
 BREVO_API_KEY=
 EMAIL_USER=
 NODE_ENV=development
